@@ -36,6 +36,8 @@ public class SysUserEntity implements Serializable {
 	 */
 	@TableId
 	private Long userId;
+	//区分标识
+	private Long distinguishing;
 
 	/**
 	 * 用户名

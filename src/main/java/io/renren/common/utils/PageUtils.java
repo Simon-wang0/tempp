@@ -56,6 +56,7 @@ public class PageUtils implements Serializable {
 		this.totalPage = (int)Math.ceil((double)totalCount/pageSize);
 	}
 
+
 	/**
 	 * 分页
 	 */
