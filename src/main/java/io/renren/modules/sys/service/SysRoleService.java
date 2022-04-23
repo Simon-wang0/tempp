@@ -25,6 +25,8 @@ public interface SysRoleService extends IService<SysRoleEntity> {
 
 	PageUtils queryPage(Map<String, Object> params);
 
+	List<SysRoleEntity> noPageList();
+
 	void saveRole(SysRoleEntity role);
 
 	void update(SysRoleEntity role);

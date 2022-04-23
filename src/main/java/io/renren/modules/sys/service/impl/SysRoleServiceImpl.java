@@ -60,7 +60,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
 		return new PageUtils(page);
 	}
 
-    @Override
+	@Override
+	public List<SysRoleEntity> noPageList() {
+		return this.list();
+	}
+
+	@Override
     @Transactional(rollbackFor = Exception.class)
     public void saveRole(SysRoleEntity role) {
         role.setCreateTime(new Date());

@@ -52,6 +52,19 @@ public class SysRoleController extends AbstractController {
 
 		return R.ok().put("page", page);
 	}
+
+	@GetMapping("/noPageList")
+	@RequiresPermissions("sys:role:list")
+	public R noPageList(){
+
+		List<SysRoleEntity> sysRoleEntities = sysRoleService.noPageList();
+
+		return R.ok().put("noPageList", sysRoleEntities);
+	}
+
+
+
+
 	
 	/**
 	 * 角色列表

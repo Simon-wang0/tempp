@@ -2,6 +2,7 @@ package io.renren.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.netty.util.internal.StringUtil;
 import io.renren.common.utils.PageUtils;
 import io.renren.modules.sys.dao.SysDepartDao;
 import io.renren.modules.sys.dao.SysRoleDao;
@@ -31,15 +32,15 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartDao, SysDepartEnt
   public PageUtils queryPage(Map<String, Object> params) {
     List<SysDepartEntity> result = new ArrayList<>();
     //params是查询条件
-    String status = (String) params.get("status");
-    String departName = (String) params.get("departName");
+    String status = params.get("status").toString();
+    String departName =params.get("departName").toString();
 
      int currPage = Integer.parseInt(params.get("currPage").toString());
      int pageSize = Integer.parseInt(params.get("pageSize").toString());
     //先从depart获取departs
     List<SysDepartEntity> departs = this.baseMapper.selectList(new QueryWrapper<SysDepartEntity>()
-            .eq(departName != null, "depart_name", departName)
-            .eq(status != null, "status", params.get("status")));
+            .eq(!StringUtil.isNullOrEmpty(departName), "depart_name", departName)
+            .eq(!StringUtil.isNullOrEmpty(status), "status", params.get("status")));
     for (SysDepartEntity s : departs) {
       List<SysRoleEntity> roles = sysRoleDao.getRoleByDepartId(s.getDepartId());
       s.setSysRole(roles);
@@ -47,12 +48,6 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartDao, SysDepartEnt
     }
     return new PageUtils(result, result.size(), pageSize, currPage);
 
-//    IPage<SysDepartEntity> page = this.page(new Query<SysDepartEntity>().getPage(params),
-//            new QueryWrapper<SysDepartEntity>()
-//                    .eq(departName!=null,"depart_name", departName)
-//                    .eq(status!=null,"status", status)
-//
-//                   );
   }
 
   @Override
