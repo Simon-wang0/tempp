@@ -43,7 +43,11 @@ public class SysDepartController extends AbstractController {
   @PostMapping("/save")
   @RequiresPermissions("sys:depart:save")
   public R save(@RequestBody SysDepartEntity depart){
-   sysDepartService.saveDepart(depart);
+    long roleId = depart.getRoleId();
+    Boolean flag = sysDepartService.saveDepart(depart, roleId);
+    if(flag==false){
+      return R.error("该部门下已存在，或者角色重复");
+    }
     return R.ok();
   }
 
@@ -54,8 +58,9 @@ public class SysDepartController extends AbstractController {
   @PostMapping("/update")
   @RequiresPermissions("sys:depart:update")
   public R update(@RequestBody SysDepartEntity depart){
-//修改部门 和角色
-   sysDepartService.update(depart);
+    long roleId = depart.getRoleId();
+   //修改部门 和角色
+   sysDepartService.update(depart,roleId);
 
     return R.ok();
   }
@@ -67,8 +72,10 @@ public class SysDepartController extends AbstractController {
   @SysLog("增强删除")
   @PostMapping("/deleteEnhance")
   @RequiresPermissions("sys:depart:deleteEnhance")
-  public R deleteEnhance(@RequestBody Long departIds){
-     sysDepartService.deleteEnhance(departIds);
+  public R deleteEnhance(@RequestBody Map<String, Long> params){
+    Long roleId = params.get("roleId");
+    Long departId = params.get("departId");
+     sysDepartService.deleteEnhance(departId,roleId);
 
     return R.ok();
   }

@@ -50,8 +50,6 @@ public class SysRoleEntity implements Serializable {
 	 */
 	private Long createUserId;
 
-	private Long departId;
-
 	@TableField(exist=false)
 	private List<Long> menuIdList;
 	

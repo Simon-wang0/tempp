@@ -16,21 +16,24 @@ public class SysDepartEntity {
   /**
    * ID
    */
+
   @TableId
+  private Long id;
   private Long departId;
   @NotBlank(message = "名称不能为空")
   private String departName;
   // 0 正常  1 停用
   private int  status;
-  /**
-   * 创建时间
-   */
   private Date createTime;
   private Date updateTime;
   //部门下的角色
   @TableField(exist = false)
   List<SysRoleEntity> sysRole;
+
   String description;
   //区分标识
   String distinguishing;
+
+  @TableField(exist = false)
+  long roleId;
 }

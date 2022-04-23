@@ -12,10 +12,7 @@ import io.renren.modules.sys.service.SysDepartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SysDepartServiceImpl extends ServiceImpl<SysDepartDao, SysDepartEntity> implements SysDepartService {
@@ -51,28 +48,43 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartDao, SysDepartEnt
   }
 
   @Override
-  public void saveDepart(SysDepartEntity depart) {
+  public Boolean saveDepart(SysDepartEntity depart, long roleId) {
+    long uuid = Math.abs(UUID.randomUUID().getMostSignificantBits());
     depart.setCreateTime(new Date());
     depart.setUpdateTime(new Date());
-    //depart.setStatus(0);
-    this.saveOrUpdate(depart);
-//    this.save(depart);
+    //是否已存在相同部门
+    Long departId=sysDepartDao.isSameDepart(depart.getDepartName());
+    if(departId!=null){
+      return false;
+    }
+//    //添加分行支行的时候 查询是否已存在角色
+//    Integer num=sysDepartDao.queryIsExsit(departId,roleId);
+//    if(num!=0){
+//      //返回错误
+//      return false;
+//    }
+    depart.setDepartId(uuid);
+    this.baseMapper.insert(depart);
+    sysDepartDao.saveDepartAndRole(uuid,roleId);
+    return true;
   }
 
   //在更新和删除的时候考虑 部门 角色 人员
   @Override
-  public void update(SysDepartEntity depart) {
+  public void update(SysDepartEntity depart,long roleId) {
     this.updateById(depart);
-    //修改标识的时候改user的标识
-
+   // this.saveOrUpdate(depart);
+    sysDepartDao.updateDepartAndRole(depart.getDepartId(),roleId);
 
   }
 
-  @Override
-  public void deleteEnhance(Long departId) {
-    //删除 部门下有角色
-    sysDepartDao.deletRoleByDepartId(departId);
 
+  @Override
+  public void deleteEnhance(Long departId,Long roleId) {
+    //删除角色
+    if (roleId != null) {
+      sysDepartDao.deletRoleByDepartId(departId,roleId);
+    }
     this.removeById(departId);
   }
 

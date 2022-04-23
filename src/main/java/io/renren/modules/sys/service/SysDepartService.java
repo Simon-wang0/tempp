@@ -13,10 +13,11 @@ public interface SysDepartService extends IService<SysDepartEntity> {
 
   PageUtils queryPage(Map<String, Object> params);
 
-  void saveDepart(SysDepartEntity role);
 
-  void update(SysDepartEntity role);
+  Boolean saveDepart(SysDepartEntity depart, long roleId);
+
+  void update(SysDepartEntity role,long roleId);
 
 
-  void deleteEnhance(Long departId);
+  void deleteEnhance(Long departId,Long roleId);
 }

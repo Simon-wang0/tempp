@@ -14,11 +14,31 @@
 
     <!-- 查询用户的所有权限 -->
     <delete id="deletRoleByDepartId" parameterType="long">
-        delete from sys_role  where depart_id = #{id}
+        delete
+        from depart_role
+        where depart_id = #{id}
+          and role_id = #{roleId}
     </delete>
 
+    <select id="queryIsExsit" resultType="Integer">
+        select count(id)
+        from depart_role
+        where depart_id = #{departId}
+          and role_id = #{roleId}
+    </select>
 
+    <insert id="saveDepartAndRole" parameterType="long">
+        insert into depart_role(depart_id, role_id)
+        values (#{departId}, #{roleId})
+    </insert>
+    <update id="updateDepartAndRole">
+        update depart_role set role_id=#{roleId} where depart_id=#{departId}
+    </update>
 
-
+    <select id="isSameDepart" parameterType="String" resultType="long">
+        select depart_id
+        from depart
+        where depart_name = #{name}
+    </select>
 
 </mapper>
