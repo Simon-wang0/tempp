@@ -18,6 +18,6 @@ public interface SysDepartDao extends BaseMapper<SysDepartEntity> {
   void saveDepartAndRole(@Param("departId") long departId, @Param("roleId") Long roleIds);
   void updateDepartAndRole(@Param("departId") long departId, @Param("roleId") Long roleIds);
 
-  Long isSameDepart(@Param("name") String name);
+  Long isSameDepart(@Param("name") String name,@Param("getDistinguishing") String getDistinguishing);
 
 }

@@ -46,7 +46,7 @@
     <select id="isSameDepart" parameterType="String" resultType="long">
         select depart_id
         from depart
-        where depart_name = #{name}
+        where depart_name = #{name} and getDistinguishing=#{getDistinguishing}
     </select>
 
 </mapper>

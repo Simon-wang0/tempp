@@ -54,7 +54,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartDao, SysDepartEnt
     depart.setCreateTime(new Date());
     depart.setUpdateTime(new Date());
     //是否已存在相同部门
-    Long departId = sysDepartDao.isSameDepart(depart.getDepartName());
+    Long departId = sysDepartDao.isSameDepart(depart.getDepartName(),depart.getDistinguishing());
     if (departId != null) {
       return false;
     }
