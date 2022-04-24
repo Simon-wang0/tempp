@@ -16,8 +16,15 @@
     <delete id="deletRoleByDepartId" parameterType="long">
         delete
         from depart_role
+        where depart_id = #{id} and role_id =#{roleId}
+
+    </delete>
+
+    <delete id="deletRole" parameterType="long">
+        delete
+        from depart_role
         where depart_id = #{id}
-          and role_id = #{roleId}
+
     </delete>
 
     <select id="queryIsExsit" resultType="Integer">
@@ -31,9 +38,10 @@
         insert into depart_role(depart_id, role_id)
         values (#{departId}, #{roleId})
     </insert>
-    <update id="updateDepartAndRole">
-        update depart_role set role_id=#{roleId} where depart_id=#{departId}
-    </update>
+<!--    <insert id="updateDepartAndRole">-->
+<!--insert into-->
+<!--        update depart_role set role_id=#{roleId} where depart_id=#{departId}-->
+<!--    </insert>-->
 
     <select id="isSameDepart" parameterType="String" resultType="long">
         select depart_id

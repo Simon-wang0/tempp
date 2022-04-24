@@ -35,5 +35,5 @@ public class SysDepartEntity {
   String distinguishing;
 
   @TableField(exist = false)
-  long roleId;
+  List<Long> roleId;
 }
